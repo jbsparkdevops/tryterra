@@ -10,42 +10,6 @@ resource "google_project_service" "secretmanager" {
   disable_on_destroy = false
 }
 
-resource "google_secret_manager_secret" "secret-basic" {
-  secret_id = "vivekkey"
-  project   = var.project_id
-
-  labels = {
-    label = "serviceaccount"
-  }
-
-  replication {
-    user_managed {
-      replicas {
-        location = "us-central1"
-      }
-      replicas {
-        location = "us-east1"
-      }
-    }
-  }
-}
-
-resource "google_secret_manager_secret_version" "basic" {
-  depends_on = [google_secret_manager_secret.secret-basic]
-  secret      = google_secret_manager_secret.secret-basic.id
-  secret_data = google_service_account.service_account.display_name
-}
-
-resource "google_service_account" "service_account" {
-  account_id   = var.account_id
-  display_name = var.name
-  project      = var.project_id
-}
-
-resource "google_service_account_key" "mykey" {
-  service_account_id = google_service_account.service_account.name
-  public_key_type    = "TYPE_X509_PEM_FILE"
-}
 
 provider "google" {
   project = var.project_id
