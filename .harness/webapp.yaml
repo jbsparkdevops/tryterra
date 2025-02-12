@@ -1,0 +1,13 @@
+environment:
+  name: webapp
+  identifier: webapp
+  description: ""
+  tags: {}
+  type: Production
+  yaml: |
+    environment:
+      name: ""
+      identifier: ""
+      type: Production
+      description: ""
+      tags: {}
